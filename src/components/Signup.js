@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Card, Form, Alert, Container } from 'react-bootstrap';
 import {useAuth} from "./../contexts/AuthContext";
+import {Link,useHistory} from 'react-router-dom';
 
 const Signup = () => {
     const nameRef = useRef();
@@ -8,6 +9,7 @@ const Signup = () => {
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
     const {signup} = useAuth();
+    const history = useHistory();
 
     const [error, setError] =useState();
     const [loading,setLoading] = useState(false);
@@ -21,6 +23,7 @@ const Signup = () => {
             setLoading(true);
             setError('');
             await signup(emailRef.current.value,passwordRef.current.value);
+            history.push("/");
         }catch(error){
             setError(error);
         }
@@ -57,7 +60,7 @@ const Signup = () => {
                     </Card.Body>
                 </Card>
                 <div className='w-100 text-center mt-2'>
-                    Already have an account? Log in!!
+                    Already have an account?<Link to='/login'> Log in! </Link>
             </div>
             </div>
         </Container>
